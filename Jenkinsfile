@@ -1,62 +1,60 @@
 pipeline {
     agent {
-        node{
+        node {
             label 'AGENT-1'
         }
     }
+
     environment {
         COURSE = "Jenkins"
     }
-     options {
-        timeout(time: 10, unit: 'SECONDS') 
+
+    options {
+        timeout(time: 10, unit: 'SECONDS')
     }
+
     stages {
         stage('Build') {
             steps {
-                script{
-                    sh"""
-                       echo 'Build stage'
-                       echo $
-                       sleep 10
-                       env
-                    """
-                }
+                sh '''
+                    echo "Build stage"
+                    echo "Course is $COURSE"
+                    sleep 10
+                    env
+                '''
             }
         }
-       
+
         stage('Test') {
             steps {
-                script{
-                    sh"""
-                       echo 'Build stage'
-                    """
-                }
+                sh '''
+                    echo "Test stage"
+                '''
             }
         }
 
         stage('Deploy') {
             steps {
-             script{
-                 sh"""
-                     echo 'Build stage'
-                    """
-                }
+                sh '''
+                    echo "Deploy stage"
+                '''
             }
         }
     }
-    post{
-        always{
-            echo ' I Will always say Hello again!'
-             cleanWs()
+
+    post {
+        always {
+            echo 'I will always say Hello again!'
+            cleanWs()
         }
-        success{
+        success {
             echo 'I will run if success'
         }
-        failure{
-            echo 'I will run if success'
+        failure {
+            echo 'I will run if failure'
         }
         aborted {
-            echo 'pipeline is aborted'
+            echo 'Pipeline is aborted'
         }
     }
 }
